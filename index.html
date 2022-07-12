@@ -3,52 +3,27 @@
 <head>
   <meta charset="utf-8">
   <title>JS Bin</title>
-   <script>
-        navigator.getUserMedia  = navigator.getUserMedia ||
-                          navigator.webkitGetUserMedia ||
-                          navigator.mozGetUserMedia ||
-                          navigator.msGetUserMedia;
+   <script src="https://unpkg.com/html5-qrcode"></script>
+<script>
+var resultContainer = document.getElementById('qr-reader-results');
+var lastResult, countResults = 0;
 
-window.requestAnimFrame = (function(){
-  return  window.requestAnimationFrame       ||
-          window.webkitRequestAnimationFrame ||
-          window.mozRequestAnimationFrame    ||
-          function( callback ){
-            window.setTimeout(callback, 1000 / 60);
-          };
-})();
-
-
-
-var VIDEOSTREAM = document.createElement('video');
-
-function success(stream){
-   VIDEOSTREAM.src = window.URL.createObjectURL(stream);
-   VIDEOSTREAM.play();
-   loop();
-}
-function fallback(){
-  alert('no cam avalible'); 
+function onScanSuccess(decodedText, decodedResult) {
+    if (decodedText !== lastResult) {
+        ++countResults;
+        lastResult = decodedText;
+        // Handle on success condition with the decoded message.
+        console.log(`Scan result ${decodedText}`, decodedResult);
+    }
 }
 
-if (!navigator.getUserMedia) {
-  	fallback();
-} else {
-	navigator.getUserMedia({video: true}, success, fallback);
-}
-
-var canvas = document.getElementById('test');
-var ctx = canvas.getContext('2d');
-
-var loop = function(){
-  ctx.drawImage(VIDEOSTREAM,0,0,300,200);
-  ctx.fillStyle = "rgba(0,0,255,.5)";
-  ctx.fillRect(20,20,260,160);
-  requestAnimFrame(loop);
-};
-    </script>
+var html5QrcodeScanner = new Html5QrcodeScanner(
+    "qr-reader", { fps: 10, qrbox: 250 });
+html5QrcodeScanner.render(onScanSuccess);
+</script>
 </head>
 <body>
-  <canvas id="test" width='300' height='200'></canvas>
+  <div id="qr-reader" style="width:500px"></div>
+  <div id="qr-reader-results"></div>
 </body>
 </html>
