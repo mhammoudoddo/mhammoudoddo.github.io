@@ -2,28 +2,31 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>JS Bin</title>
-   <script src="https://unpkg.com/html5-qrcode"></script>
+  <title>Id Scanner</title>
 <script>
-var resultContainer = document.getElementById('qr-reader-results');
-var lastResult, countResults = 0;
+let camera_button = document.querySelector("#start-camera");
+let video = document.querySelector("#video");
+let click_button = document.querySelector("#click-photo");
+let canvas = document.querySelector("#canvas");
 
-function onScanSuccess(decodedText, decodedResult) {
-    if (decodedText !== lastResult) {
-        ++countResults;
-        lastResult = decodedText;
-        // Handle on success condition with the decoded message.
-        console.log(`Scan result ${decodedText}`, decodedResult);
-    }
-}
+camera_button.addEventListener('click', async function() {
+   	let stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+	video.srcObject = stream;
+});
 
-var html5QrcodeScanner = new Html5QrcodeScanner(
-    "qr-reader", { fps: 10, qrbox: 250 });
-html5QrcodeScanner.render(onScanSuccess);
+click_button.addEventListener('click', function() {
+   	canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+   	let image_data_url = canvas.toDataURL('image/jpeg');
+
+   	// data url of the image
+   	console.log(image_data_url);
+})
 </script>
 </head>
 <body>
-  <div id="qr-reader" style="width:500px"></div>
-  <div id="qr-reader-results"></div>
+  <button id="start-camera">Start Camera</button>
+<video id="video" width="320" height="240" autoplay></video>
+<button id="click-photo">Click Photo</button>
+<canvas id="canvas" width="320" height="240"></canvas>
 </body>
 </html>
