@@ -19,6 +19,24 @@ if (getUserMediaSupported()) {
   console.warn('getUserMedia() is not supported by your browser');
 }
 
-// Placeholder function for next step. Paste over this in the next step.
+// Enable the live webcam view and start classification.
 function enableCam(event) {
+  // Only continue if the COCO-SSD has finished loading.
+  if (!model) {
+    return;
+  }
+  
+  // Hide the button once clicked.
+  event.target.classList.add('removed');  
+  
+  // getUsermedia parameters to force video but not audio.
+  const constraints = {
+    video: true
+  };
+
+  // Activate the webcam stream.
+  navigator.mediaDevices.getUserMedia(constraints).then(function(stream) {
+    video.srcObject = stream;
+    video.addEventListener('loadeddata', predictWebcam);
+  });
 }
