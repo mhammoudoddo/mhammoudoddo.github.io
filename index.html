@@ -4,58 +4,11 @@
 <head>
   <title>Nice image capture button</title>
 </head>
-  <meta charset="utf-8">
-  <title>JS Bin</title>
-   <script>
-        navigator.getUserMedia  = navigator.getUserMedia ||
-                          navigator.webkitGetUserMedia ||
-                          navigator.mozGetUserMedia ||
-                          navigator.msGetUserMedia;
 
-window.requestAnimFrame = (function(){
-  return  window.requestAnimationFrame       ||
-          window.webkitRequestAnimationFrame ||
-          window.mozRequestAnimationFrame    ||
-          function( callback ){
-            window.setTimeout(callback, 1000 / 60);
-          };
-})();
-
-
-
-var VIDEOSTREAM = document.createElement('video');
-
-function success(stream){
-   VIDEOSTREAM.src = window.URL.createObjectURL(stream);
-   VIDEOSTREAM.play();
-   loop();
-}
-function fallback(){
-  alert('no cam avalible'); 
-}
-
-if (!navigator.getUserMedia) {
-  	fallback();
-} else {
-	navigator.getUserMedia({video: true}, success, fallback);
-}
-
-var canvas = document.getElementById('test');
-var ctx = canvas.getContext('2d');
-
-var loop = function(){
-  ctx.drawImage(VIDEOSTREAM,0,0,300,200);
-  ctx.fillStyle = "rgba(0,0,255,.5)";
-  ctx.fillRect(20,20,260,160);
-  requestAnimFrame(loop);
-};
-    </script>
-</head>
 <body>
   <label class="cameraButton">Take a picture
     <input type="file" accept="image/*;capture=camera">
   </label>
-  <canvas id="test" width='300' height='200'></canvas>
 </body>
 
 </html>
