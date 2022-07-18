@@ -16,7 +16,7 @@ $.ajax({
     data: { file_1: '', file_2: 'Smith', options: '{"processImage": true}' },
     dataType: "json",
     contentType: 'application/x-www-form-urlencoded; charset=utf-8',
-    // crossDomain: true,
+    crossDomain: true,
     headers: {
        'Authorization': 'Basic ' + authorizationBasic
     },
