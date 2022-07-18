@@ -19,13 +19,13 @@ const urlx = 'https://corsproxy.io/?' + encodeURIComponent('https://integration-
 
 $.ajax({
     type: 'POST',
-    url: urlx,
+    url: myUrl,
     data: formData,
     dataType: "json",
     contentType: 'application/x-www-form-urlencoded; charset=utf-8',
     crossDomain: true,
     processData: false,
-    //xhrFields: { withCredentials: true }, 
+    xhrFields: { withCredentials: true }, 
     headers: {
        'Authorization': 'Basic bWF6ZW4uaGFtbW91ZEBleHQub2Rkby1iaGYuY29tOktZV0lSbDVKNFFHTlkzNnY0UEJU'
     },
