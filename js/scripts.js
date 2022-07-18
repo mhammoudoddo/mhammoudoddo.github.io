@@ -21,6 +21,7 @@ $.ajax({
     dataType: "jsonp",
     contentType: 'application/x-www-form-urlencoded; charset=utf-8',
     crossDomain: true,
+    processData: false,
     xhrFields: { withCredentials: true }, 
     headers: {
        'Authorization': 'Basic ' + authorizationBasic
