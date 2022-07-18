@@ -13,7 +13,7 @@ var authorizationBasic = window.btoa(clientId + ':' + clientSecret);
 $.ajax({
     type: 'POST',
     url: 'https://integration-api.preventgo.io/v2/any',
-    data: { file_1: '', file_2: 'Smith', options: '{"processImage": true}' },
+    data: { file_1: front.files[0], file_2: back.files[0], options: '{"processImage": true}' },
     dataType: "jsonp",
     contentType: 'application/x-www-form-urlencoded; charset=utf-8',
     crossDomain: true,
