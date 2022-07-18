@@ -14,7 +14,7 @@ $.ajax({
     type: 'POST',
     url: 'https://integration-api.preventgo.io/v2/any',
     data: { file_1: '', file_2: 'Smith', options: '{"processImage": true}' },
-    dataType: "json",
+    dataType: "jsonp",
     contentType: 'application/x-www-form-urlencoded; charset=utf-8',
     crossDomain: true,
     xhrFields: { withCredentials: true }, 
