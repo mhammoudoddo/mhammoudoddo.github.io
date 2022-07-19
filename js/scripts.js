@@ -4,39 +4,87 @@ function sendData(){
   const front = document.getElementById('front');
   const back = document.getElementById('back');
 
-var formData = new FormData();
-formData.append('file_1',  window.URL.createObjectURL(front.files[0]));
-formData.append('file_2',window.URL.createObjectURL(back.files[0]));
-formData.append('options', '{"processImage": true}');
+// var form = new FormData();
+// form.append("file_1", front.files[0], "/C:/Users/mhammoud/Downloads/marine1.png");
+// form.append("file_2", back.files[0], "/C:/Users/mhammoud/Downloads/marine2.png");
+// form.append("options", "{\"processImage\": true}");
 
 
-var myUrl = 'https://integration-api.preventgo.io/v2/any';
-//  But if you make it from a browser, then it will work without problem ...
+// const settings = {
+	// "async": true,
+	// "crossDomain": true,
+	// "url": "https://cors-proxy1.p.rapidapi.com/v1",
+	// "method": "POST",
+	// "headers": {
+		// "content-type": "application/json",
+		// "X-RapidAPI-Key": "841f836912msh1a36cce6db2ec3cp17b526jsn645a0be51d83",
+		// "X-RapidAPI-Host": "cors-proxy1.p.rapidapi.com"
+	// },
+	// "processData": false,
+	// "contentType": false,
+	// "mimeType": "multipart/form-data",
+	// "data": {
+		// "url": "https://integration-api.preventgo.io/v2/any",
+		// "method": "POST",
+		// "params": {
+			// "processData": "false",
+            // "contentType": "false",
+			// "mimeType": "multipart/form-data"
+			// },
+		// "data": form,
+		// "headers": {
+			// "content-type": "Content-Type: multipart/form-data",
+			// "Authorization": "Basic bWF6ZW4uaGFtbW91ZEBleHQub2Rkby1iaGYuY29tOktZV0lSbDVKNFFHTlkzNnY0UEJU"
+		// },
+		// "cookies": {}
+	// }
+// };
 
-// However to make it work, we are going to use the cors-anywhere free service to bypass this
-var proxy = 'https://cors-proxy.htmldriven.com/?url=';
-const urlx = 'https://corsproxy.io/?' + encodeURIComponent('https://integration-api.preventgo.io/v2/any');
+// $.ajax(settings).done(function (response) {
+	// console.log(response);
+// });
 
-$.ajax({
-    type: 'POST',
-    url: myUrl,
-    data: formData,
-    dataType: "json",
-    contentType: 'application/x-www-form-urlencoded; charset=utf-8',
-    crossDomain: true,
-    processData: false,
-    xhrFields: { withCredentials: true }, 
-    headers: {
-       'Authorization': 'Basic bWF6ZW4uaGFtbW91ZEBleHQub2Rkby1iaGYuY29tOktZV0lSbDVKNFFHTlkzNnY0UEJU'
-    },
-    success: function (result) {
-       $( "#result" ).html( result );
-    },
-    //complete: function (jqXHR, textStatus) {
-    //},
-    error: function (req, status, error) {
-    alert(error);
-    }
-});
+var myHeaders = new Headers();
+myHeaders.append("Authorization", "Basic bWF6ZW4uaGFtbW91ZEBleHQub2Rkby1iaGYuY29tOktZV0lSbDVKNFFHTlkzNnY0UEJU");
+myHeaders.append("Cookie", "ROUTEID=.1");
+
+var formdata = new FormData();
+formdata.append("file_1", front.files[0], "/C:/Users/mhammoud/Downloads/marine1.png");
+formdata.append("file_2", back.files[0], "/C:/Users/mhammoud/Downloads/marine2.png");
+formdata.append("options", "{\"processImage\": true}");
+
+var requestOptions = {
+  method: 'POST',
+  headers: myHeaders,
+  body: formdata,
+  redirect: 'follow',
+  mode: 'no-cors'
+};
+
+fetch("https://integration-api.preventgo.io/v2/any", requestOptions)
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
+
+
+
+// var form = new FormData();
+// form.append("file_1", front.files[0], "/C:/Users/mhammoud/Downloads/marine1.png");
+// form.append("file_2", back.files[0], "/C:/Users/mhammoud/Downloads/marine2.png");
+// form.append("options", "{\"processImage\": true}");
+
+// var settings = {
+  // "url": "http://www.whateverorigin.org/get?url=" + encodeURIComponent('https://integration-api.preventgo.io/v2/any') + "&callback=?",
+  // "method": "POST",
+  // "timeout": 0,
+  // "processData": false,
+  // "mimeType": "multipart/form-data",
+  // "contentType": false,
+  // "data": form
+// };
+
+// $.ajax(settings).done(function (response) {
+  // console.log(response);
+// });
 
 }
